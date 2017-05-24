@@ -1,0 +1,34 @@
+spring: 
+    http: 
+    encoding: 
+    force: true
+    datasource:
+      url: jdbc:mysql://172.23.27.98:3306/migucurrency?useUnicode=true&characterEncoding=UTF-8&connectTimeout=30000&socketTimeout=60000
+      username: migucurrency
+      password: migucurrency123
+      maxActive: 100
+      maxIdle: 30
+      maxWait: 500
+    profiles: prod
+    jackson: 
+      date-format: "yyyyMMdd HH:mm:ss"
+management: 
+  security: 
+    enabled: false
+logging:  
+  level: 
+    root: info
+    com:
+      cmcc:
+        mgr:
+          biz: error 
+          dao: error
+          controller: error
+  path: c:/home/migupay/logs 
+threadPool: 
+  corePoolSize: 100
+  maximumPoolSize: 200
+  keepAliveTime: 30
+
+    
+
