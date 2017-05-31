@@ -131,7 +131,7 @@ public class LogFilter implements Filter {
         int indexBUSI = inputString.indexOf("BUSI_INFO");
         if(indexBUSI !=  -1){
             int startIndex = inputString.indexOf("{", indexBUSI);
-            int endIndex = inputString.indexOf("}",startIndex);
+            int endIndex = inputString.indexOf("}",inputString.lastIndexOf("\"",inputString.length()));
             convertedString = inputString.substring(startIndex, endIndex+1);
         }
         servletRequest.setAttribute("cModel", convertedString);
