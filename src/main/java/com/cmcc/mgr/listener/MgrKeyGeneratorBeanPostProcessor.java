@@ -43,23 +43,27 @@ public class MgrKeyGeneratorBeanPostProcessor implements BeanPostProcessor {
                     }
                 
             }
-        Set<Class<?>> classes = ClassUtils.getAllInterfacesForClassAsSet(target.getClass());
-        classes.add(target.getClass());
-        for(Class c : classes){
-            Method[] methods = ReflectionUtils.getAllDeclaredMethods(c);
-            for(Method m : methods){
-                Cacheable[] cacheables = m.getDeclaredAnnotationsByType(Cacheable.class);
-                if(cacheables.length != 0){
-                  for(Cacheable cacheAnnotation : cacheables){
-                      Object cacheAnnotationObject = Proxy.getInvocationHandler(cacheAnnotation);
-                      Field valueCacheField = ReflectionUtils.findField(cacheAnnotationObject.getClass(), "memberValues");
-                      valueCacheField.setAccessible(true);
-                      LinkedHashMap map = (LinkedHashMap)ReflectionUtils.getField(valueCacheField, cacheAnnotationObject);
-                      if(StringUtils.isEmpty(map.get("keyGenerator"))){
-                          map.put("keyGenerator","mgrKeyGenerator");
-                      }
-                  }
-              }
+        if (target != null) {
+            Set<Class<?>> classes = ClassUtils.getAllInterfacesForClassAsSet(target.getClass());
+            classes.add(target.getClass());
+            for (Class c : classes) {
+                Method[] methods = ReflectionUtils.getAllDeclaredMethods(c);
+                for (Method m : methods) {
+                    Cacheable[] cacheables = m.getDeclaredAnnotationsByType(Cacheable.class);
+                    if (cacheables.length != 0) {
+                        for (Cacheable cacheAnnotation : cacheables) {
+                            Object cacheAnnotationObject = Proxy.getInvocationHandler(cacheAnnotation);
+                            Field valueCacheField = ReflectionUtils.findField(cacheAnnotationObject.getClass(),
+                                    "memberValues");
+                            valueCacheField.setAccessible(true);
+                            LinkedHashMap map = (LinkedHashMap) ReflectionUtils.getField(valueCacheField,
+                                    cacheAnnotationObject);
+                            if (StringUtils.isEmpty(map.get("keyGenerator"))) {
+                                map.put("keyGenerator", "mgrKeyGenerator");
+                            }
+                        }
+                    }
+                }
             }
         }
         return bean;

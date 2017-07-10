@@ -56,6 +56,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <!-- 引入quartz 因为spring自带的Scheduled不支持concurrent属性 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.1.4</version>
+		</dependency> 
 		<!-- spring boot 自动重启组件  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
